@@ -104,56 +104,45 @@
 
     <!-- Profile Modal -->
     <div
-      class="modal fade"
-      id="profileModal"
-      tabindex="-1"
-      aria-labelledby="profileModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="profileModalLabel">My Profile</h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <h5 id="settings-heading">Settings</h5>
-            <p id="settings-description">
-              Here you can change the application settings.
-            </p>
-            <button
-              type="button"
-              class="btn btn-danger w-100 mt-2"
-              aria-describedby="settings-description"
-            >
-              Delete Account
-            </button>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button class="btn btn-danger" id="logout-button">Log out</button>
-          </div>
+    class="modal fade"
+    id="profileModal"
+    tabindex="-1"
+    aria-labelledby="profileModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="profileModalLabel">My Profile</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-footer">
+          <button id="delete-account-btn" type="button" class="btn btn-danger">Delete Account</button>
+          <button type="button" class="btn btn-warning" id="logout-button">
+            Log out
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
         </div>
       </div>
     </div>
+  </div>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script src="js/home.js"></script>
     <script src="js/transactions.js"></script>
   </body>
 </html>

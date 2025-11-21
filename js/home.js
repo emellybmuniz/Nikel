@@ -45,6 +45,18 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  const deleteAccount_Button = document.getElementById("delete-account-btn");
+  if (deleteAccount_Button) {
+    deleteAccount_Button.addEventListener("click", () => {
+      if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+        localStorage.removeItem(logged);
+        localStorage.removeItem("session");
+        sessionStorage.removeItem("logged");
+        window.location.href = "index.html";
+      }
+    });
+  }
+
   document
     .getElementById("transactionModal")
     .addEventListener("hidden.bs.modal", function (event) {

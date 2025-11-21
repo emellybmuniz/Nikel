@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const logout_Button = document.getElementById("logout-button");
+  const deleteAccount_Button = document.getElementById("delete-account-btn");
 
   const logged = sessionStorage.getItem("logged");
   const session = localStorage.getItem("session");
@@ -20,6 +21,21 @@ document.addEventListener("DOMContentLoaded", function () {
       localStorage.removeItem("session");
       sessionStorage.removeItem("logged");
       window.location.href = "index.html";
+    });
+  }
+
+  if (deleteAccount_Button) {
+    deleteAccount_Button.addEventListener("click", () => {
+      if (
+        confirm(
+          "Are you sure you want to delete your account? This action cannot be undone."
+        )
+      ) {
+        localStorage.removeItem(logged);
+        localStorage.removeItem("session");
+        sessionStorage.removeItem("logged");
+        window.location.href = "index.html";
+      }
     });
   }
 
