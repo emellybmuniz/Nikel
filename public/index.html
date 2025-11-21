@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nikel</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <main class="container-fluid">
+        <div class="row vh-100">
+            <div class="col-md-5 text-center order-md-1 order-2 info-container">
+                <div class="features-container text-content">
+                    <p>
+                        Take control of your finances effortlessly <br>
+                        Optimize your wealth and investments <br>
+                        Reach your financial dreams and aspirations
+                    </p>
+                </div>
+                <img class="img-fluid pocket-image" src="assets/images/pocket.png" alt="Pocket image">
+                <img class="img-fluid coins-image" src="assets/images/coins.png" alt="Coins image">
+            </div>
+            <div class="col-md-7 order-md-2 order-1 form-container">
+                <div class="form-box text-center">
+                    <h1>Welcome to Nikel</h1>
+                    <p>Your gateway to seamless web experiences.</p>
+                    <form id="login-form" action="/login" method="POST">
+                        <div class="mb-3 text-start">
+                            <label for="login-email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="login-email" name="email" required>
+                        </div>
+                        <div class="mb-3 text-start">
+                            <label for="login-password" class="form-label">Password</label> 
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="login-password" name="password" required>
+                                <span class="input-group-text" id="toggle-password"><i class="bi bi-eye-slash"></i></span>
+                            </div>
+                        </div>
+                        <div class="form-check mb-3 text-start">
+                            <input class="form-check-input" type="checkbox" id="keepConnected" name="keepConnected">
+                            <label class="form-check-label" for="keepConnected">Keep me connected</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" id="login-btn">Enter</button>
+                        <p class="mt-3">Don't have an account? <a href="#" data-bs-toggle="modal" data-bs-target="#createAccountModal">Click here to sign up.</a></p>
+                    </form>
+                    <div class="mt-4 logos">
+                        <img src="assets/images/codai-logo.png" alt="Codai Logo" class="img-fluid me-3">
+                        <img src="assets/images/growdev-logo.png" alt="Growdev Logo" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Create Account Modal -->
+    <div class="modal fade" id="createAccountModal" tabindex="-1" aria-labelledby="createAccountModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="createAccountModalLabel">Create Account</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="create-account-form" action="/create-account" method="POST"">
+                    <div class="mb-3"> 
+                        <label for="create-account-email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="create-account-email" required>
+                        <p class="text-muted">Please enter a valid email address that you have access to.</p>
+                    </div>
+                    <div class="mb-3">
+                        <label for="create-account-password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="create-account-password" required>
+                        <p class="text-muted">Make sure to remember your password and keep it safe.</p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" id="create-account-btn" form="create-account-form">Create Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

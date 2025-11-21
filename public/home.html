@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nikel</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+  </head>
+  <body id="app">
+    <main class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <i class="bi bi-coin"></i> Nikel
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse justify-content-end text-center"
+            id="navbarNav"
+          >
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="home.html"
+                  ><i class="bi bi-house-door"></i><br />Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="transactions.html"
+                  ><i class="bi bi-cash-stack"></i><br />Transactions</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#"
+                  data-bs-toggle="modal"
+                  data-bs-target="#profileModal"
+                  ><i class="bi bi-person-circle"></i><br />Profile</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-8 mt-4 summary">
+            <h1 class="display-4">
+              <i class="bi bi-cash-coin"></i> Balance: R$
+              <span id="total-balance">00,00</span>
+            </h1>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 mt-4">
+            <div
+              class="table-responsive rounded-3 shadow bg-white table-container"
+            >
+              <table class="table transactions-table">
+                <thead>
+                  <tr>
+                    <th scope="col">
+                      <i class="bi bi-arrow-up-circle"></i> Incomes
+                    </th>
+                    <th scope="col">
+                      <i class="bi bi-arrow-down-circle"></i> Outcomes
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="2" class="text-start">
+                      <a href="transactions.html" class="btn btn-secondary mt-3"
+                        >See All</a
+                      >
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Profile Modal -->
+    <div
+      class="modal fade"
+      id="profileModal"
+      tabindex="-1"
+      aria-labelledby="profileModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="profileModalLabel">My Profile</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <h5>Configurações</h5>
+            <p>Aqui você pode alterar as configurações do aplicativo.</p>
+            <button type="button" class="btn btn-danger w-100 mt-2">
+              Deletar Conta
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button class="btn btn-danger" id="logout-button">Log out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      type="button"
+      href="#"
+      class="btn btn-primary fab btn-entry-transaction rounded-circle justify-content-center align-items-center fs-1"
+      data-bs-toggle="modal"
+      data-bs-target="#transactionModal"
+    >
+      +
+    </button>
+
+    <!-- Transaction Modal -->
+    <div
+      class="modal fade"
+      id="transactionModal"
+      tabindex="-1"
+      aria-labelledby="transactionModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="transactionModalLabel">
+              Add Transaction
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="transaction-form">
+              <div class="mb-3">
+                <label for="transaction-value" class="form-label">Value</label>
+                <input
+                  type="number"
+                  step="any"
+                  inputmode="decimal"
+                  class="form-control"
+                  id="transaction-value"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="transaction-description" class="form-label"
+                  >Description</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="transaction-description"
+                  list="transaction-presets"
+                  required
+                />
+                <datalist id="transaction-presets">
+                  <option value="Rent"></option>
+                  <option value="Food"></option>
+                  <option value="Groceries"></option>
+                  <option value="Transportation"></option>
+                  <option value="Utilities"></option>
+                  <option value="Electricity Bill"></option>
+                  <option value="Water Bill"></option>
+                  <option value="Gas"></option>
+                  <option value="Salary"></option>
+                  <option value="Freelance"></option>
+                  <option value="Entertainment"></option>
+                  <option value="Shopping"></option>
+                  <option value="Health"></option>
+                  <option value="Education"></option>
+                  <option value="Others"></option>
+                </datalist>
+              </div>
+              <div class="mb-3">
+                <label for="transaction-date" class="form-label">Date</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="transaction-date"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="transaction-type"
+                    id="income-radio"
+                    value="1"
+                    checked
+                  />
+                  <label class="form-check-label" for="income-radio"
+                    >Income</label
+                  >
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="transaction-type"
+                    id="outcome-radio"
+                    value="2"
+                  />
+                  <label class="form-check-label" for="outcome-radio"
+                    >Outcome</label
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              id="add-transaction-btn"
+              form="transaction-form"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/home.js"></script>
+  </body>
+</html>
