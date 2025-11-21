@@ -239,6 +239,10 @@ body#app::before {
 }
 
 @media (max-width: 991.98px) {
+  body {
+    overflow-y: auto;
+  }
+
   .navbar {
     background-color: #4075de;
   }
