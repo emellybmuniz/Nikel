@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   const logout_Button = document.getElementById("logout-button");
+  const entriesTable_tbody = document.getElementById("entries-table-body");
   const transactionModal = new bootstrap.Modal(
     document.getElementById("transactionModal")
   );
   const transaction_Form = document.getElementById("transaction-form");
+  const transactionId_input = document.getElementById("transaction-id");
   const balance_span = document.getElementById("total-balance");
 
   let logged = sessionStorage.getItem("logged");
@@ -21,6 +23,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (dataUser) {
     data = JSON.parse(dataUser);
+    let needsUpdate = false;
+    data.transactions.forEach((transaction, index) => {
+      if (typeof transaction.id === "undefined") {
+        transaction.id = new Date().getTime() + index;
+        needsUpdate = true;
+      }
+    });
+    if (needsUpdate) {
+      localStorage.setItem(logged, JSON.stringify(data));
+    }
   }
 
   updateDashboard();
@@ -33,31 +45,103 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  document
+    .getElementById("transactionModal")
+    .addEventListener("hidden.bs.modal", function (event) {
+      transaction_Form.reset();
+      transactionId_input.value = "";
+      document.getElementById("transactionModalLabel").textContent =
+        "Add Transaction";
+      document.getElementById("add-transaction-btn").textContent = "Add";
+    });
+
+  entriesTable_tbody.addEventListener("click", function (e) {
+    const button = e.target.closest("button");
+    if (!button) return;
+
+    const id = button.dataset.id;
+    if (button.classList.contains("btn-delete")) {
+      if (confirm("Are you sure you want to delete this transaction?")) {
+        deleteTransaction(id);
+      }
+    } else if (button.classList.contains("btn-edit")) {
+      editTransaction(id);
+    }
+  });
+
   transaction_Form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const value = parseFloat(document.getElementById("transaction-value").value);
-    const description = document.getElementById("transaction-description").value;
+    const transactionId = transactionId_input.value;
+    const value = parseFloat(
+      document.getElementById("transaction-value").value
+    );
+    const description = document.getElementById(
+      "transaction-description"
+    ).value;
     const date = document.getElementById("transaction-date").value;
     const type = document.querySelector(
       'input[name="transaction-type"]:checked'
     ).value;
 
-    data.transactions.unshift({
-      value: value,
-      type: type,
-      description: description,
-      date: date,
-    });
+    if (transactionId) {
+      const transactionIndex = data.transactions.findIndex(
+        (t) => t.id == transactionId
+      );
+      if (transactionIndex !== -1) {
+        data.transactions[transactionIndex].value = value;
+        data.transactions[transactionIndex].type = type;
+        data.transactions[transactionIndex].description = description;
+        data.transactions[transactionIndex].date = date;
+        alert("Transaction updated successfully.");
+      }
+    } else {
+      data.transactions.unshift({
+        id: new Date().getTime(),
+        value: value,
+        type: type,
+        description: description,
+        date: date,
+      });
+      alert("Transaction added successfully.");
+    }
 
     localStorage.setItem(logged, JSON.stringify(data));
-    e.target.reset();
+    transaction_Form.reset();
     transactionModal.hide();
 
     updateDashboard();
-
-    alert("Transaction added successfully.");
   });
+
+  function saveAndRefresh() {
+    localStorage.setItem(logged, JSON.stringify(data));
+    updateDashboard();
+  }
+
+  function deleteTransaction(id) {
+    data.transactions = data.transactions.filter((t) => t.id != id);
+    saveAndRefresh();
+  }
+
+  function editTransaction(id) {
+    const transaction = data.transactions.find((t) => t.id == id);
+    if (!transaction) return;
+
+    transactionId_input.value = transaction.id;
+    document.getElementById("transaction-value").value = transaction.value;
+    document.getElementById("transaction-description").value =
+      transaction.description;
+    document.getElementById("transaction-date").value = transaction.date;
+    document.querySelector(
+      `input[name="transaction-type"][value="${transaction.type}"]`
+    ).checked = true;
+
+    document.getElementById("transactionModalLabel").textContent =
+      "Editar Lançamento";
+    document.getElementById("add-transaction-btn").textContent = "Salvar";
+
+    transactionModal.show();
+  }
 
   function updateDashboard() {
     displayTransactions();
@@ -70,8 +154,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     tbody.innerHTML = "";
 
-    const recentCashIn = transactions.filter((item) => item.type === "1").slice(0, 5);
-    const recentCashOut = transactions.filter((item) => item.type === "2").slice(0, 5);
+    const recentCashIn = transactions
+      .filter((item) => item.type === "1")
+      .slice(0, 5);
+    const recentCashOut = transactions
+      .filter((item) => item.type === "2")
+      .slice(0, 5);
 
     const maxRows = Math.max(recentCashIn.length, recentCashOut.length);
 
@@ -80,14 +168,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const incomeCell = document.createElement("td");
       if (recentCashIn[i]) {
-        const date = new Date(recentCashIn[i].date).toLocaleDateString("pt-BR", {
-          timeZone: "UTC",
-        });
+        const date = new Date(recentCashIn[i].date).toLocaleDateString(
+          "pt-BR",
+          {
+            timeZone: "UTC",
+          }
+        );
         incomeCell.innerHTML = `
-              <strong>R$ ${recentCashIn[i].value.toFixed(2)}</strong>
+              <strong>$ ${recentCashIn[i].value.toFixed(2)}</strong>
               <div class="d-flex justify-content-between">
                   <small>${recentCashIn[i].description}</small>
                   <small>${date}</small>
+              </div>
+              <div class="text-end mt-1">
+                  <button class="btn btn-sm btn-outline-warning btn-edit" data-id="${
+                    recentCashIn[i].id
+                  }"><i class="bi bi-pencil-square"></i></button>
+                  <button class="btn btn-sm btn-outline-danger btn-delete" data-id="${
+                    recentCashIn[i].id
+                  }"><i class="bi bi-trash"></i></button>
               </div>
           `;
       }
@@ -95,14 +194,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const outcomeCell = document.createElement("td");
       if (recentCashOut[i]) {
-        const date = new Date(recentCashOut[i].date).toLocaleDateString("pt-BR", {
-          timeZone: "UTC",
-        });
+        const date = new Date(recentCashOut[i].date).toLocaleDateString(
+          "pt-BR",
+          {
+            timeZone: "UTC",
+          }
+        );
         outcomeCell.innerHTML = `
-              <strong>- R$ ${recentCashOut[i].value.toFixed(2)}</strong>
+              <strong>- $ ${recentCashOut[i].value.toFixed(2)}</strong>
               <div class="d-flex justify-content-between">
                   <small>${recentCashOut[i].description}</small>
                   <small>${date}</small>
+              </div>
+              <div class="text-end mt-1">
+                  <button class="btn btn-sm btn-outline-warning btn-edit" data-id="${
+                    recentCashOut[i].id
+                  }"><i class="bi bi-pencil-square"></i></button>
+                  <button class="btn btn-sm btn-outline-danger btn-delete" data-id="${
+                    recentCashOut[i].id
+                  }"><i class="bi bi-trash"></i></button>
               </div>
           `;
       }

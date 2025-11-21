@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   margin: 0;
@@ -61,7 +65,7 @@ main.container-fluid,
   position: absolute !important;
   width: 200px;
   top: 48%;
-  right: 2%;
+  right: 8%;
 }
 
 .coins-image {
@@ -154,23 +158,104 @@ body#app::before {
 }
 
 .summary h1 {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
 }
 
 .fab {
   position: fixed;
+  z-index: 999;
   bottom: 32px;
   right: 32px;
   width: 64px;
   height: 64px;
-  font-size: 2.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 0px;
 }
 
+.table-container {
+  padding: 40px;
+}
+
+.transactions-table {
+  font-size: 1.2rem;
+  vertical-align: middle;
+}
+
+.transactions-table strong {
+  font-size: 1.4rem;
+}
+
+.transactions-table thead th {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.transactions-table {
+  margin-bottom: 0;
+}
+
+.transactions-table th,
+.transactions-table td {
+  padding: 1.5rem;
+}
+
+.transactions-table thead th:not(:last-child) {
+  border-right: 30px solid transparent;
+}
+
+.transactions-table td:not(:last-child) {
+  border-right: 30px solid transparent;
+}
+
+.transactions-table tfoot {
+  border: transparent;
+}
+
+.navbar-nav .nav-item {
+  margin: 0 15px;
+}
+
+.navbar-brand {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-left: 20px;
+}
+
+.navbar-brand i {
+  font-size: 1.9rem;
+  margin-right: 7px;
+}
+
+.navbar-nav .nav-link {
+  font-size: 1.1rem;
+}
+
+.navbar-nav .nav-link i {
+  font-size: 1.7rem;
+}
+
+.table-responsive.shadow {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 991.98px) {
+  .navbar {
+    background-color: #4075de;
+  }
+
+  .summary h1 {
+    font-size: 2rem;
+  }
+
+  .table-container {
+    padding: 30px 20px;
+  }
+
+  .transactions-table th:not(:last-child),
+  .transactions-table td:not(:last-child) {
+    border-right: none;
+  }
+}
 
 @media (max-width: 767.98px) {
   main.container-fluid,
@@ -204,71 +289,49 @@ body#app::before {
     border-radius: 0;
     padding: 2rem;
   }
-}
 
-.table-container {
-  padding: 40px 60px;
-}
+  .summary h1 {
+    font-size: 1.8rem;
+  }
 
-.transactions-table {
-  font-size: 1.2rem;
-  vertical-align: middle;
-}
+  .table-container {
+    padding: 20px 15px;
+  }
 
-.transactions-table strong {
-  font-size: 1.4rem;
-}
+  .transactions-table {
+    font-size: 1rem;
+  }
 
-.transactions-table thead th {
-  font-size: 1.3rem;
-  font-weight: 600;
-}
+  .transactions-table thead th {
+    font-size: 1.1rem;
+  }
 
-.transactions-table {
-  margin-bottom: 0;
-}
+  .transactions-table th,
+  .transactions-table td {
+    padding: 1rem;
+  }
 
-.transactions-table th,
-.transactions-table td {
-  padding: 1.5rem 3rem;
-}
+  .navbar-brand {
+    font-size: 1.5rem;
+  }
 
-.transactions-table thead th:not(:last-child) {
-  border-right: 60px solid transparent;
-}
+  .navbar-brand i {
+    font-size: 1.4rem;
+  }
 
-.transactions-table td:not(:last-child) {
-  border-right: 60px solid transparent;
-}
+  .navbar-nav .nav-link {
+    font-size: 0.9rem;
+  }
 
-.transactions-table tfoot {
-  border: transparent;
-}
+  .navbar-nav .nav-link i {
+    font-size: 1.4rem;
+  }
 
-.navbar-nav .nav-item {
-  margin: 0 15px;
-}
-
-.navbar-brand {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-left: 20px;
-}
-
-.navbar-brand i {
-  font-size: 1.9rem;
-  margin-right: 7px;
-}
-
-.navbar-nav .nav-link {
-  font-size: 1.1rem;
-}
-
-.navbar-nav .nav-link i {
-  font-size: 1.7rem;
-}
-
-.table-responsive.shadow {
-  position: relative;
-  z-index: 1;
+  .fab {
+    bottom: 16px;
+    right: 16px;
+    width: 56px;
+    height: 56px;
+    font-size: 1.5rem;
+  }
 }

@@ -60,8 +60,17 @@ function submitForm(isLogin) {
     );
     return;
   }
+  const confirmPassword_input = document.getElementById(
+    "create-account-confirm-password"
+  ).value;
+
   if (password_input.length < 4) {
     alert("Please enter a password at least 4 characters long.");
+    return;
+  }
+
+  if (password_input !== confirmPassword_input) {
+    alert("Passwords do not match. Please try again.");
     return;
   }
   saveAccount({
@@ -98,6 +107,46 @@ addEventListener("DOMContentLoaded", (event) => {
     const type =
       password.getAttribute("type") === "password" ? "text" : "password";
     password.setAttribute("type", type);
+
+    const icon = this.querySelector("i");
+    if (type === "password") {
+      icon.classList.replace("bi-eye", "bi-eye-slash");
+    } else {
+      icon.classList.replace("bi-eye-slash", "bi-eye");
+    }
+  });
+
+  const toggleCreatePassword_span = document.querySelector(
+    "#toggle-create-password"
+  );
+  const createPassword = document.querySelector("#create-account-password");
+
+  toggleCreatePassword_span.addEventListener("click", function () {
+    const type =
+      createPassword.getAttribute("type") === "password" ? "text" : "password";
+    createPassword.setAttribute("type", type);
+
+    const icon = this.querySelector("i");
+    if (type === "password") {
+      icon.classList.replace("bi-eye", "bi-eye-slash");
+    } else {
+      icon.classList.replace("bi-eye-slash", "bi-eye");
+    }
+  });
+
+  const toggleCreateConfirmPassword_span = document.querySelector(
+    "#toggle-create-confirm-password"
+  );
+  const createConfirmPassword = document.querySelector(
+    "#create-account-confirm-password"
+  );
+
+  toggleCreateConfirmPassword_span.addEventListener("click", function () {
+    const type =
+      createConfirmPassword.getAttribute("type") === "password"
+        ? "text"
+        : "password";
+    createConfirmPassword.setAttribute("type", type);
 
     const icon = this.querySelector("i");
     if (type === "password") {
